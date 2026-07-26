@@ -1,0 +1,12 @@
+.next
+node_modules
+out
+build
+coverage
+package-lock.json
+
+# Phase 0 spec docs — hand-authored, not reformatted by tooling
+CLAUDE.md
+PROJECT_SPEC.md
+ARCHITECTURE.md
+DATABASE.md
