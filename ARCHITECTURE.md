@@ -115,3 +115,28 @@ Server-side pagination + filtering for the question bank · MongoDB compound ind
 paths (see `DATABASE.md`) · lazy-load heavy components (test navigator, charts) · image
 optimization · code splitting · skeletons. The attempts collection is high-write — index it for
 the analytics reads it feeds, not for everything.
+
+## 9. UI architecture (Phase 2)
+
+Full reference: `DESIGN_SYSTEM.md`. Summary of decisions that affect how future phases build UI:
+
+- **Component library**: shadcn/ui on the `base-nova` style, backed by **Base UI**
+  (`@base-ui/react`), not Radix. Polymorphism is `render={<Link .../>}`, not `asChild`; trigger
+  events are `onClick`, not `onSelect` (except `cmdk`'s own `Command.Item`).
+- **Design tokens**: semantic CSS variables in `src/app/globals.css` — surface tiers
+  (`background`/`surface`/`surface-elevated`/`surface-muted`), brand `primary`, and status
+  colors (`success`/`warning`/`info`/`destructive`) kept distinct from `primary` so interactive
+  controls and status feedback never look alike. Learning/mastery/difficulty state → token
+  mappings live in `src/components/shared/status.ts`, not scattered per component.
+- **Component organization**: `components/ui` (shadcn primitives) · `components/math` (KaTeX
+  wrapper + math content blocks) · `components/layout` (app shell, nav, header) ·
+  `components/shared` (cross-domain reusable UI) · `components/features/{dashboard,learning,
+  questions}` (domain-specific, built on the above).
+- **Responsive navigation**: three regimes, not two — persistent sidebar (desktop, `lg:`+),
+  drawer-triggered-by-hamburger (tablet, `md`–`lg`), fixed bottom nav + "More" sheet (mobile,
+  `<md`). Sidebar collapse and theme preference are read via `useSyncExternalStore` (not
+  `useEffect`+`useState`) to stay hydration-safe without an extra render.
+- **Mock data boundary**: `src/lib/mock-data/` + `src/types/ui.ts` back every Phase 2 page.
+  These are UI-only and intentionally simpler than `DATABASE.md`'s schema — they get replaced
+  by real data fetching starting Phase 5 (Learning system) and Phase 6 (Question engine), not
+  extended into a fake backend.

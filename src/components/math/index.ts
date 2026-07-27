@@ -1,2 +1,12 @@
 export { Math } from "./Math";
 export type { MathProps } from "./Math";
+export { FormulaCard } from "./FormulaCard";
+export type { FormulaCardProps } from "./FormulaCard";
+export { WorkedExample } from "./WorkedExample";
+export type { WorkedExampleProps } from "./WorkedExample";
+export { DefinitionBlock } from "./DefinitionBlock";
+export type { DefinitionBlockProps } from "./DefinitionBlock";
+export { TheoremBlock } from "./TheoremBlock";
+export type { TheoremBlockProps } from "./TheoremBlock";
+export { MathCallout } from "./MathCallout";
+export type { MathCalloutProps, MathCalloutVariant } from "./MathCallout";
